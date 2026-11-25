@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "installations": {
+    "claude": {
+      "package:get_it": {
+        "skills": [
+          {
+            "name": "get-it-expert",
+            "installedAt": "2026-11-25T17:00:48.934863Z",
+            "contentHash": "4TT+QU3L9qJYu9WiLz23Mg==",
+            "path": "skills/get-it-expert"
+          }
+        ]
+      },
+      "package:single_value_cubit": {
+        "skills": [
+          {
+            "name": "single_value_cubit-package",
+            "installedAt": "2026-11-25T17:00:48.937536Z",
+            "contentHash": "Y5AFHjbFvOiJIWc+0p0ngQ==",
+            "path": "skills/single_value_cubit-package"
+          }
+        ]
+      }
+    }
+  }
+}

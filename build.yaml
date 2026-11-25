@@ -1,0 +1,22 @@
+targets:
+  $default:
+    builders:
+      slang_build_runner:
+        options:
+          base_locale: pl
+          fallback_strategy: base_locale
+          input_directory: lib/i18n/src
+          input_file_pattern: .json
+          output_directory: lib/i18n
+          output_file_name: translations.g.dart
+          lazy: true
+          locale_handling: true
+          flutter_integration: false
+          namespaces: true
+          translate_var: t
+          enum_name: AppLocale
+          class_name: Translations
+          translation_class_visibility: private
+          sanitization:
+            prefix: _
+            case: camel
