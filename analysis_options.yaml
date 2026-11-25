@@ -1,0 +1,22 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.gr.dart"
+    - "**/*.config.dart"
+    - "**/*.tailor.dart"
+    - build/**
+    - android/**
+    - ios/**
+
+linter:
+  rules:
+    public_member_api_docs: false
+    eol_at_end_of_file: true
+    avoid_positional_boolean_parameters: false
+    no_default_cases: false
+    document_ignores: false
+
+formatter:
+  trailing_commas: preserve
