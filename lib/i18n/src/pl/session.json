@@ -1,4 +1,20 @@
 {
   "title": "Sesja oddechowa",
-  "placeholder": "Tu wybierzesz parametry sesji."
+  "paceLabel": "Tempo",
+  "paceUnit": {
+    "one": "oddech na minutę",
+    "few": "oddechy na minutę",
+    "many": "oddechów na minutę",
+    "other": "oddechu na minutę"
+  },
+  "paceSemantics": {
+    "one": "$n oddech na minutę",
+    "few": "$n oddechy na minutę",
+    "many": "$n oddechów na minutę",
+    "other": "$n oddechu na minutę"
+  },
+  "durationLabel": "Czas trwania",
+  "durationOption": "$minutes min",
+  "continueToSummary": "Dalej",
+  "breathingAnimationPlaceholder": "Animacja Rive"
 }

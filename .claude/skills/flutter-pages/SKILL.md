@@ -31,7 +31,7 @@ class OnboardingPage extends StatelessWidget {
         BlocListener<CompleteOnboardingCubit, CompleteOnboardingState>(
           listener: (context, state) {
             if (state is CompleteOnboardingSuccess) {
-              unawaited(context.router.replaceAll([const SessionRoute()]));
+              unawaited(context.router.replaceAll([const SessionFlowRoute()]));
             }
           },
         ),

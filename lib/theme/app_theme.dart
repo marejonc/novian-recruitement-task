@@ -104,6 +104,15 @@ abstract final class AppTheme {
           shape: buttonShape,
         ),
       ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: SegmentedButton.styleFrom(
+          foregroundColor: colors.textSecondary,
+          selectedForegroundColor: colors.primary,
+          selectedBackgroundColor: colors.primaryMuted,
+          side: BorderSide(color: colors.outline),
+          textStyle: typography.bodyStrong,
+        ),
+      ),
       sliderTheme: SliderThemeData(
         activeTrackColor: colors.primary,
         inactiveTrackColor: colors.primaryMuted,

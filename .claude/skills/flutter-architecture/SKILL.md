@@ -157,7 +157,7 @@ AutoRoute(page: SessionRoute.page, path: '/session'),
   `lib/routing/onboarding_guard.dart` reads the flag through the repository (from `getIt`) and
   redirects to `OnboardingRoute` on first launch, so the session screen never flashes first.
   Finishing onboarding persists the flag (through a Cubit) and then calls
-  `context.router.replaceAll([const SessionRoute()])`.
+  `context.router.replaceAll([const SessionFlowRoute()])`.
 
 ## State management
 

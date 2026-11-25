@@ -8,15 +8,14 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: OnboardingRoute.page, path: '/onboarding'),
     AutoRoute(
-      page: SessionRoute.page,
-      path: '/session',
+      page: SessionFlowRoute.page,
+      path: '/',
       initial: true,
       guards: const [OnboardingGuard()],
-    ),
-    AutoRoute(
-      page: SummaryRoute.page,
-      path: '/summary',
-      guards: const [OnboardingGuard()],
+      children: [
+        AutoRoute(page: SessionRoute.page, path: 'session', initial: true),
+        AutoRoute(page: SummaryRoute.page, path: 'summary'),
+      ],
     ),
   ];
 }
