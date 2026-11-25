@@ -1,28 +1,27 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:novian_recruitement_task/features/summary/bloc/summary_cubit.dart';
+import 'package:novian_recruitement_task/features/summary/widgets/summary_error_view.dart';
+import 'package:novian_recruitement_task/features/summary/widgets/summary_loaded_view.dart';
+import 'package:novian_recruitement_task/features/summary/widgets/summary_loading_view.dart';
 import 'package:novian_recruitement_task/i18n/i18n.dart';
-import 'package:novian_recruitement_task/theme/app_colors.dart';
-import 'package:novian_recruitement_task/theme/app_spacing.dart';
-import 'package:novian_recruitement_task/theme/app_typography.dart';
 
-/// Placeholder until the summary screen is built.
 class SummaryPageContent extends StatelessWidget {
   const new({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<SummaryCubit>().state;
+
     return Scaffold(
       appBar: AppBar(title: Text(t.summary.title)),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(context.appSpacing.l),
-          child: Text(
-            t.summary.placeholder,
-            textAlign: TextAlign.center,
-            style: context.appTypography.body.copyWith(
-              color: context.appColors.textSecondary,
-            ),
-          ),
-        ),
+      body: SafeArea(
+        child: switch (state) {
+          SummaryLoading() => const SummaryLoadingView(),
+          SummaryError() => const SummaryErrorView(),
+          SummaryLoaded(:final user, :final age, :final choices) =>
+            SummaryLoadedView(user: user, age: age, choices: choices),
+        },
       ),
     );
   }

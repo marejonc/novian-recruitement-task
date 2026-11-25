@@ -16,6 +16,8 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
     required this.onPrimary,
     required this.accent,
     required this.accentMuted,
+    required this.energy,
+    required this.energyMuted,
     required this.textPrimary,
     required this.textSecondary,
     required this.outline,
@@ -34,6 +36,8 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
     onPrimary: Color(0xFFFFFCF6),
     accent: Color(0xFF8A7BB8),
     accentMuted: Color(0xFFE5DFF3),
+    energy: Color(0xFFB0672E),
+    energyMuted: Color(0xFFF3E2CF),
     textPrimary: Color(0xFF1E2622),
     textSecondary: Color(0xFF5E6A64),
     outline: Color(0xFFD8D0C2),
@@ -52,6 +56,8 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
     onPrimary: Color(0xFF0E1A16),
     accent: Color(0xFFB7A9E6),
     accentMuted: Color(0xFF2E2944),
+    energy: Color(0xFFE6AC78),
+    energyMuted: Color(0xFF3B2D21),
     textPrimary: Color(0xFFEDEAE3),
     textSecondary: Color(0xFFA3ACA8),
     outline: Color(0xFF2F3A46),
@@ -75,6 +81,13 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
   final Color accent;
   @override
   final Color accentMuted;
+
+  /// Warm amber for quick, energizing breathing — the third accent next to
+  /// the calm sage and the deep lavender.
+  @override
+  final Color energy;
+  @override
+  final Color energyMuted;
   @override
   final Color textPrimary;
   @override

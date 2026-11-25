@@ -1,4 +1,32 @@
 {
   "title": "Podsumowanie",
-  "placeholder": "Tu zobaczysz podsumowanie sesji."
+  "loading": "Wczytywanie Twojego profilu",
+  "loadError": "Nie udało się wczytać Twojego profilu.",
+  "retry": "Spróbuj ponownie",
+  "greeting": "Cześć, $firstName!",
+  "identity": {
+    "one": "$firstName $lastName · $n rok",
+    "few": "$firstName $lastName · $n lata",
+    "many": "$firstName $lastName · $n lat",
+    "other": "$firstName $lastName · $n roku"
+  },
+  "paceLabel": "Twoje tempo",
+  "paceName": {
+    "deep": "Głęboki oddech",
+    "balanced": "Spokojny rytm",
+    "energizing": "Ożywiający rytm"
+  },
+  "message": {
+    "deep": "$firstName, przy tak wolnym tempie każdy wydech jest długi. Pozwól, by razem z nim odpływało napięcie całego dnia.",
+    "balanced": "$firstName, ten rytm wycisza i równoważy oddech z pracą serca. Oddychaj spokojnie i daj sobie chwilę wytchnienia.",
+    "energizing": "$firstName, żwawsze tempo doda Ci energii. Oddychaj lekko, bez forsowania, i zwolnij, kiedy tylko zechcesz."
+  },
+  "sessionLabel": "Twoja sesja",
+  "totalBreathsUnit": {
+    "one": "oddech",
+    "few": "oddechy",
+    "many": "oddechów",
+    "other": "oddechu"
+  },
+  "sessionDetails": "$breathsPerMinute na minutę · $minutes min"
 }
