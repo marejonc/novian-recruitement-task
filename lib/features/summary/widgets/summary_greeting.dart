@@ -17,6 +17,7 @@ class SummaryGreeting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final typography = context.appTypography;
 
     return Column(

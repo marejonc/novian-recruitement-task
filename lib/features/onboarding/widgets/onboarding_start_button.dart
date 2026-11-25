@@ -13,6 +13,7 @@ class OnboardingStartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final state = context.watch<CompleteOnboardingCubit>().state;
     final isBusy =
         state is CompleteOnboardingInProgress ||

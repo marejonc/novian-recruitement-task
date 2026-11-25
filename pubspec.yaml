@@ -22,6 +22,7 @@ dependencies:
   shared_preferences: ^2.5.6
   single_value_cubit: ^1.2.3
   slang: ^4.19.2
+  slang_flutter: ^4.19.0
   theme_tailor_annotation: ^4.0.2
 
 dev_dependencies:

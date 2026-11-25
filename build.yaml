@@ -11,7 +11,7 @@ targets:
           output_file_name: translations.g.dart
           lazy: true
           locale_handling: true
-          flutter_integration: false
+          flutter_integration: true
           namespaces: true
           translate_var: t
           enum_name: AppLocale

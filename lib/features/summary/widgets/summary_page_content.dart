@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:novian_recruitement_task/features/language/widgets/language_switch_action.dart';
 import 'package:novian_recruitement_task/features/summary/bloc/summary_cubit.dart';
 import 'package:novian_recruitement_task/features/summary/widgets/summary_error_view.dart';
 import 'package:novian_recruitement_task/features/summary/widgets/summary_loaded_view.dart';
@@ -11,10 +12,14 @@ class SummaryPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final state = context.watch<SummaryCubit>().state;
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.summary.title)),
+      appBar: AppBar(
+        title: Text(t.summary.title),
+        actions: const [LanguageSwitchAction()],
+      ),
       body: SafeArea(
         child: switch (state) {
           SummaryLoading() => const SummaryLoadingView(),

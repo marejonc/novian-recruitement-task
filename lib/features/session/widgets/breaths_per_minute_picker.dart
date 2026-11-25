@@ -18,6 +18,7 @@ class BreathsPerMinutePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final spacing = context.appSpacing;
     final typography = context.appTypography;
     final paceUnit = t.session.paceUnit(n: breathsPerMinute);

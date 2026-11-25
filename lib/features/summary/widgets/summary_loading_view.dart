@@ -9,6 +9,7 @@ class SummaryLoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,

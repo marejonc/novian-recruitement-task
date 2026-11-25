@@ -9,6 +9,7 @@ class OnboardingIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final colors = context.appColors;
     final spacing = context.appSpacing;
     final typography = context.appTypography;

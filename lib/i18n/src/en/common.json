@@ -1,0 +1,14 @@
+{
+  "appTitle": "Medcare Breathe",
+  "languageLabel": "Language",
+  "languages": {
+    "pl": {
+      "name": "Polski",
+      "code": "PL"
+    },
+    "en": {
+      "name": "English",
+      "code": "EN"
+    }
+  }
+}

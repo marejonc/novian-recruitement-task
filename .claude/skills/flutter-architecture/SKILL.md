@@ -40,7 +40,7 @@ lib/
     app_router.gr.dart  # Generated — never edit
     *_guard.dart        # AutoRouteGuard implementations
   i18n/
-    src/pl/{namespace}.json   # translation sources (slang, base locale pl)
+    src/{pl,en}/{namespace}.json  # translation sources (slang, base locale pl, default en)
     i18n.dart                 # barrel + initTranslations()
     translations*.g.dart      # generated — never edit
   theme/            # ThemeExtensions (colors, spacing, radius, typography) + ThemeData
@@ -190,7 +190,7 @@ final breaths = context.select<BreathsPerMinuteCubit, int>((c) => c.state);
 
 ## Translations
 
-No hardcoded user-visible strings — all text comes from slang's `t` (JSON in `lib/i18n/src/pl/`,
+No hardcoded user-visible strings — all text comes from slang's `context.t` (JSON in `lib/i18n/src/{pl,en}/`,
 one file per namespace). `domain/` never returns user-facing text: it returns values or enums that the widget
 turns into a translated string. Details in `flutter-widgets`.
 

@@ -1,0 +1,28 @@
+{
+  "title": "Summary",
+  "loading": "Loading your profile",
+  "loadError": "Could not load your profile.",
+  "retry": "Try again",
+  "greeting": "Hi, $firstName!",
+  "identity": {
+    "one": "$firstName $lastName · $n year old",
+    "other": "$firstName $lastName · $n years old"
+  },
+  "paceLabel": "Your pace",
+  "paceName": {
+    "deep": "Deep breathing",
+    "balanced": "Calm rhythm",
+    "energizing": "Energizing rhythm"
+  },
+  "message": {
+    "deep": "$firstName, at such a slow pace every exhale is long. Let the tension of the whole day drift away with it.",
+    "balanced": "$firstName, this rhythm calms you and balances your breath with your heartbeat. Breathe easy and give yourself a moment of rest.",
+    "energizing": "$firstName, a livelier pace will give you energy. Breathe lightly, without forcing it, and slow down whenever you like."
+  },
+  "sessionLabel": "Your session",
+  "totalBreathsUnit": {
+    "one": "breath",
+    "other": "breaths"
+  },
+  "sessionDetails": "$breathsPerMinute per minute · $minutes min"
+}

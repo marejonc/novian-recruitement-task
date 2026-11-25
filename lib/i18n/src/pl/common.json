@@ -1,3 +1,14 @@
 {
-  "appTitle": "Medcare Oddech"
+  "appTitle": "Medcare Oddech",
+  "languageLabel": "Język",
+  "languages": {
+    "pl": {
+      "name": "Polski",
+      "code": "PL"
+    },
+    "en": {
+      "name": "English",
+      "code": "EN"
+    }
+  }
 }

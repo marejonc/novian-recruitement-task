@@ -11,6 +11,7 @@ class SummaryErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final spacing = context.appSpacing;
 
     return Center(

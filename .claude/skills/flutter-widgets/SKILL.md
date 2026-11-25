@@ -1,6 +1,6 @@
 ---
 name: flutter-widgets
-description: Rules for widget files (lib/**/widgets/**) in the novian_recruitement_task app — translations via slang's `t` instead of hardcoded strings, theme tokens from lib/theme (context.appColors, appSpacing, appRadius, appTypography) instead of raw values, one public widget per file, buildX naming, reading Cubit state with watch/select, responsive layout, plus a grep self-check. Use when creating or editing any widget file or the theme.
+description: Rules for widget files (lib/**/widgets/**) in the novian_recruitement_task app — translations via slang's `context.t` instead of hardcoded strings, theme tokens from lib/theme (context.appColors, appSpacing, appRadius, appTypography) instead of raw values, one public widget per file, buildX naming, reading Cubit state with watch/select, responsive layout, plus a grep self-check. Use when creating or editing any widget file or the theme.
 paths:
   - "lib/**/widgets/**"
   - "lib/theme/**"
@@ -20,8 +20,9 @@ widget-returning closures inside `build`.
 
 ## Translations — no hardcoded strings
 
-Every user-visible string comes from slang via `t` (import
-`package:novian_recruitement_task/i18n/i18n.dart`). That covers `Text`, titles, button labels,
+Every user-visible string comes from slang via `context.t` — start `build` with
+`final t = context.t;` (import `package:novian_recruitement_task/i18n/i18n.dart`). The global `t`
+is hidden by the barrel: it would not rebuild the widget when the user switches language. That covers `Text`, titles, button labels,
 `tooltip`, `semanticsLabel`, hint and error text.
 
 ```dart
@@ -34,7 +35,8 @@ Text('Sesja oddechowa')
 Text('Cześć ${user.firstName}, masz $age lat')
 ```
 
-- Sources: `lib/i18n/src/pl/{namespace}.json`, base locale `pl` (`build.yaml` holds the slang
+- Sources: `lib/i18n/src/{pl,en}/{namespace}.json` — every key in both locales; base locale `pl`, the app
+  starts in `en` (`defaultLocale` in `i18n.dart`) (`build.yaml` holds the slang
   config, `namespaces: true`). The file name is the first key segment: `pl/session.json` →
   `t.session.…`; the file holds only its own keys, without a wrapping namespace key. A new feature
   gets its own namespace file; shared words go in `common.json`.
@@ -44,7 +46,8 @@ Text('Cześć ${user.firstName}, masz $age lat')
 - Messages picked from state (a relaxation message per breathing pace) are chosen in the widget by
   switching on a domain enum — the domain returns the enum, never the text.
 - After editing JSON run `dart run build_runner build`. Never edit `translations*.g.dart`.
-- Locales load lazily — `main()` awaits `initTranslations()` before `runApp`.
+- Locales load lazily — `main()` awaits `initTranslations()` (with the saved language) before
+  `runApp`, and wraps `App` in `TranslationProvider`. `LanguageCubit` (above the router) switches it.
 
 ## Theme tokens — no raw design values
 

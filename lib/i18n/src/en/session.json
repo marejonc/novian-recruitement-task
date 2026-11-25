@@ -1,0 +1,16 @@
+{
+  "title": "Breathing session",
+  "paceLabel": "Pace",
+  "paceUnit": {
+    "one": "breath per minute",
+    "other": "breaths per minute"
+  },
+  "paceSemantics": {
+    "one": "$n breath per minute",
+    "other": "$n breaths per minute"
+  },
+  "durationLabel": "Duration",
+  "durationOption": "$minutes min",
+  "continueToSummary": "Continue",
+  "breathingAnimationPlaceholder": "Rive animation"
+}

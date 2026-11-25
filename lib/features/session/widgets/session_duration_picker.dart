@@ -17,6 +17,7 @@ class SessionDurationPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

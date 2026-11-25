@@ -21,6 +21,7 @@ class BreathingAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final colors = context.appColors;
 
     return ConstrainedBox(

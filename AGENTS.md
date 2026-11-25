@@ -81,7 +81,8 @@ examples.
   / `appSpacing` / `appRadius`; add a missing token first. A size only one class uses is a private
   `static const` on that class.
 - **No hardcoded user-visible strings** — every `Text`, label, title, tooltip, hint, error and
-  `semanticsLabel` comes from slang's `t.namespace.key` (JSON in `lib/i18n/src/pl/`). Strings built
+  `semanticsLabel` comes from slang's `context.t.namespace.key` (JSON in `lib/i18n/src/{pl,en}/`; the
+  global `t` is hidden so a language switch rebuilds every reader). Strings built
   from values (the summary message) are slang parameters / plurals, not string concatenation.
 - **No `fontSize` / `fontWeight` in a text style's `copyWith`** — pick or add a typography token.
 - **Never a hand-written `copyWith`** — `@CopyWith()` for states and models, theme_tailor for

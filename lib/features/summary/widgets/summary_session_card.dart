@@ -18,6 +18,7 @@ class SummarySessionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final typography = context.appTypography;
     final spacing = context.appSpacing;
     final accent = choices.pace.accentIn(context.appColors);

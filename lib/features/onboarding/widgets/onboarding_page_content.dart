@@ -1,7 +1,9 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:novian_recruitement_task/features/onboarding/widgets/onboarding_hero_animation.dart';
-import 'package:novian_recruitement_task/features/onboarding/widgets/onboarding_intro.dart';
-import 'package:novian_recruitement_task/features/onboarding/widgets/onboarding_start_button.dart';
+import 'package:novian_recruitement_task/features/onboarding/bloc/onboarding_step_cubit.dart';
+import 'package:novian_recruitement_task/features/onboarding/domain/onboarding_step.dart';
+import 'package:novian_recruitement_task/features/onboarding/widgets/onboarding_intro_step.dart';
+import 'package:novian_recruitement_task/features/onboarding/widgets/onboarding_language_step.dart';
 import 'package:novian_recruitement_task/theme/app_spacing.dart';
 
 class OnboardingPageContent extends StatelessWidget {
@@ -10,8 +12,9 @@ class OnboardingPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final spacing = context.appSpacing;
+    final step = context.watch<OnboardingStepCubit>().state;
 
-    // The hero takes whatever height is left; on short screens (landscape
+    // Each step fills the remaining height; on short screens (landscape
     // phones) the whole column scrolls instead of overflowing.
     return Scaffold(
       body: SafeArea(
@@ -27,18 +30,10 @@ class OnboardingPageContent extends StatelessWidget {
                       horizontal: spacing.l,
                       vertical: spacing.xl,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Expanded(
-                          child: Center(child: OnboardingHeroAnimation()),
-                        ),
-                        SizedBox(height: spacing.xl),
-                        const OnboardingIntro(),
-                        SizedBox(height: spacing.xl),
-                        const OnboardingStartButton(),
-                      ],
-                    ),
+                    child: switch (step) {
+                      OnboardingStep.language => const OnboardingLanguageStep(),
+                      OnboardingStep.intro => const OnboardingIntroStep(),
+                    },
                   ),
                 ),
               ],

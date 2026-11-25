@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:novian_recruitement_task/features/language/widgets/language_switch_action.dart';
 import 'package:novian_recruitement_task/features/session/bloc/session_choices_cubit.dart';
 import 'package:novian_recruitement_task/features/session/widgets/breathing_animation.dart';
 import 'package:novian_recruitement_task/features/session/widgets/breaths_per_minute_picker.dart';
@@ -13,13 +14,17 @@ class SessionPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final spacing = context.appSpacing;
     final choices = context.watch<SessionChoicesCubit>().state;
 
     // The animation takes whatever height is left; on short screens
     // (landscape phones) the whole column scrolls instead of overflowing.
     return Scaffold(
-      appBar: AppBar(title: Text(t.session.title)),
+      appBar: AppBar(
+        title: Text(t.session.title),
+        actions: const [LanguageSwitchAction()],
+      ),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(

@@ -12,6 +12,7 @@ class SessionContinueButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     return FilledButton(
       onPressed: () => unawaited(context.router.push(const SummaryRoute())),
       child: Text(t.session.continueToSummary),

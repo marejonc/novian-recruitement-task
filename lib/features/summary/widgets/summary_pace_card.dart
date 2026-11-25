@@ -25,6 +25,7 @@ class SummaryPaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
     final colors = context.appColors;
     final typography = context.appTypography;
     final spacing = context.appSpacing;
@@ -47,7 +48,7 @@ class SummaryPaceCard extends StatelessWidget {
               style: typography.label.copyWith(color: accent),
             ),
             SizedBox(height: spacing.xs),
-            Text(_paceName(pace), style: typography.title),
+            Text(_paceName(t, pace), style: typography.title),
             SizedBox(height: spacing.m),
             ClipRRect(
               borderRadius: BorderRadius.circular(context.appRadius.pill),
@@ -59,20 +60,20 @@ class SummaryPaceCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: spacing.m),
-            Text(_message(pace), style: typography.body),
+            Text(_message(t, pace), style: typography.body),
           ],
         ),
       ),
     );
   }
 
-  String _paceName(BreathingPace pace) => switch (pace) {
+  String _paceName(Translations t, BreathingPace pace) => switch (pace) {
     BreathingPace.deep => t.summary.paceName.deep,
     BreathingPace.balanced => t.summary.paceName.balanced,
     BreathingPace.energizing => t.summary.paceName.energizing,
   };
 
-  String _message(BreathingPace pace) => switch (pace) {
+  String _message(Translations t, BreathingPace pace) => switch (pace) {
     BreathingPace.deep => t.summary.message.deep(firstName: firstName),
     BreathingPace.balanced => t.summary.message.balanced(firstName: firstName),
     BreathingPace.energizing => t.summary.message.energizing(
