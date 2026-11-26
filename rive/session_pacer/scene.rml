@@ -1,0 +1,1393 @@
+<Rive version="1" kind="fragment">
+    <!--
+        Session Bloom: the breathing guide on the session screen.
+
+        The flower of the app icon: overlapping translucent circles around a
+        solid core, in the same palette as the onboarding bloom (primary
+        petals, primaryMuted halo), set by the app from its theme tokens.
+
+        Everything the user picks reaches the file through the "Pacer" view model:
+
+        - breathsPerMinute (4..12): one petal, and one tick outside the halo, per
+          breath of a minute; at the
+          default of 6 the flower is the app icon. Petals fade in and out and
+          their spacing glides when the slider moves. The breath timelines
+          play at breathsPerMinute / 6 (a 10 s breath at 6), and the host turns
+          the whole flower once a minute, which is one petal spacing per breath
+          at any pace. Slow paces mix in a longer
+          exhale (2:3); fast ones breathe evenly (1:1).
+        - durationMinutes (1, 3 or 5): rings of petals, like the onboarding bloom:
+          inner only for 1 minute, plus a middle ring for 3, plus an outer for 5.
+
+        Each breath the petals open out from the core on the inhale and gather
+        back towards it on the exhale; the halo swells with them.
+
+        Rive cannot bind a state's playback speed, so the breath lives in the
+        nestable "Breath" artboard and the host plays its timelines through
+        NestedSimpleAnimation, whose speed and mix are bindable. The nested
+        artboard reads the host's view model.
+    -->
+    <Artboard defaultStateMachineId="0:300" viewModelId="0:100" viewModelInstanceId="0:101" styleId="0:3" width="400" height="400" name="Pacer" id="0:2">
+        <LayoutComponentStyle name="Artboard Style" id="0:3"/>
+        <!-- Turns the whole flower once a minute: one petal spacing per breath at any pace, and a full turn wraps seamlessly. -->
+        <Node x="200" y="200" name="Turn" id="0:21">
+        <NestedArtboard artboardId="0:30" x="-200" y="-200" name="Breath" id="0:20">
+            <NestedSimpleAnimation animationId="0:200" isPlaying="true" name="Even">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="199" converterId="0:530"/>
+            </NestedSimpleAnimation>
+            <!-- Mixed over Even: fully at 4 breaths a minute, gone at 12. -->
+            <NestedSimpleAnimation animationId="0:201" isPlaying="true" name="Long Exhale">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="199" converterId="0:530"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="200" converterId="0:534"/>
+            </NestedSimpleAnimation>
+        </NestedArtboard>
+        </Node>
+        <LinearAnimation loopValue="loop" duration="3600" name="Turn" id="0:210">
+            <KeyedObject objectId="0:21">
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear"/>
+                    <KeyFrameDouble frame="3600" value="6.2831853"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <!-- Runs the data binds and the turn; the breath itself is in the nested timelines. -->
+        <StateMachine name="Pacer" id="0:300">
+            <StateMachineLayer name="Turn" id="0:310">
+                <AnyState x="0" y="-150"/>
+                <ExitState x="300" y="-150"/>
+                <EntryState x="0" y="0">
+                    <StateTransition stateToId="0:311"/>
+                </EntryState>
+                <AnimationState x="200" y="0" animationId="0:210" id="0:311"/>
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+
+    <Artboard isComponent="true" viewModelId="0:100" styleId="0:31" x="500" width="400" height="400" name="Breath" id="0:30">
+        <LayoutComponentStyle name="Artboard Style" id="0:31"/>
+
+        <!-- Cream centre of the logo, on top of the petals but softened so it does not outshine them. -->
+        <Shape x="200" y="200" opacity="0.75" name="Core" id="0:70">
+            <Ellipse width="36" height="36" name="Path"/>
+            <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+        </Shape>
+
+        <!-- One petal per breath of a minute, spaced evenly. -->
+        <Node x="200" y="200" name="Flower" id="0:40">
+            <!-- Inner petals: always shown. -->
+            <Node name="Inner Layer" id="0:37">
+                <Node name="Inner Petal 1">
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1000">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 2">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:561"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1001">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 3">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:562"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1002">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 4">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:563"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1003">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 5">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:564"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:604"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1004">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 6">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:565"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:605"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1005">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 7">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:566"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:606"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1006">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 8">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:567"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:607"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1007">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 9">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:568"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:608"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1008">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 10">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:569"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:609"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1009">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 11">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:570"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:610"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1010">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Inner Petal 12">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:571"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:611"/>
+                    <Shape y="-52" opacity="0.3" name="Circle" id="0:1011">
+                        <Ellipse width="112" height="112" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+            </Node>
+            <!-- Middle petals: from 3 minutes, set half a petal apart. -->
+            <Node name="Middle Layer" id="0:38">
+                <DataBindContext sourcePathIds="0:100-0:111" propertyKey="18" converterId="0:641"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:643"/>
+                <Node name="Middle Petal 1">
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1100">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 2">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:561"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1101">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 3">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:562"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1102">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 4">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:563"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1103">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 5">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:564"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:604"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1104">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 6">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:565"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:605"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1105">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 7">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:566"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:606"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1106">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 8">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:567"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:607"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1107">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 9">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:568"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:608"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1108">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 10">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:569"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:609"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1109">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 11">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:570"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:610"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1110">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Middle Petal 12">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:571"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:611"/>
+                    <Shape y="-74" opacity="0.16" name="Circle" id="0:1111">
+                        <Ellipse width="136" height="136" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+            </Node>
+            <!-- Outer petals: at 5 minutes. -->
+            <Node name="Outer Layer" id="0:39">
+                <DataBindContext sourcePathIds="0:100-0:111" propertyKey="18" converterId="0:642"/>
+                <Node name="Outer Petal 1">
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1200">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 2">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:561"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1201">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 3">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:562"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1202">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 4">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:563"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1203">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 5">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:564"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:604"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1204">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 6">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:565"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:605"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1205">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 7">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:566"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:606"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1206">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 8">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:567"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:607"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1207">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 9">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:568"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:608"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1208">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 10">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:569"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:609"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1209">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 11">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:570"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:610"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1210">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+                <Node name="Outer Petal 12">
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:571"/>
+                    <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:611"/>
+                    <Shape y="-87" opacity="0.1" name="Circle" id="0:1211">
+                        <Ellipse width="150" height="150" name="Path"/>
+                        <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                    </Shape>
+                </Node>
+            </Node>
+        </Node>
+
+        <!-- One tick per petal, just outside the halo; turns with the flower but does not breathe. -->
+        <Node x="200" y="200" name="Ticks" id="0:36">
+            <Node name="Tick 1">
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 2">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:561"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 3">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:562"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 4">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:563"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 5">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:564"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:604"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 6">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:565"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:605"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 7">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:566"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:606"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 8">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:567"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:607"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 9">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:568"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:608"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 10">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:569"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:609"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 11">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:570"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:610"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+            <Node name="Tick 12">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="15" converterId="0:571"/>
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="18" converterId="0:611"/>
+                <Shape y="-184" opacity="0.5" name="Line">
+                    <Rectangle width="3" height="12" cornerRadiusTL="1.5" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:112" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+        </Node>
+
+        <!-- Soft backdrop, as behind the onboarding bloom. -->
+        <Shape x="200" y="200" opacity="0.7" name="Halo" id="0:72">
+            <Ellipse width="336" height="336" name="Path"/>
+            <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:113" propertyKey="37"/></SolidColor></Fill>
+        </Shape>
+
+        <!-- One breath at 6 a minute (10 s): 5 s in, 5 s out.  -->
+        <LinearAnimation loopValue="loop" duration="600" name="Even" id="0:200">
+            <KeyedObject objectId="0:1000">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1001">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1002">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1003">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1004">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1005">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1006">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1007">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1008">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1009">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1010">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1011">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1100">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1101">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1102">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1103">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1104">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1105">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1106">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1107">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1108">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1109">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1110">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1111">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1200">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1201">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1202">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1203">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1204">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1205">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1206">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1207">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1208">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1209">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1210">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1211">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:40">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.82" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.82"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.82" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.82"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:70">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="1.12" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="1.12"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="1.12" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="1.12"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:72">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.9" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.9"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.9" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.9"/>
+                </KeyedProperty>
+                <KeyedProperty property="opacity">
+                    <KeyFrameDouble frame="0" value="0.5" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="300" value="0.75" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.5"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <!-- The same breath with a 2:3 split: 4 s in, 6 s out. -->
+        <LinearAnimation loopValue="loop" duration="600" name="Long Exhale" id="0:201">
+            <KeyedObject objectId="0:1000">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1001">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1002">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1003">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1004">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1005">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1006">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1007">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1008">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1009">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1010">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1011">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-28" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-52" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-28"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1100">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1101">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1102">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1103">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1104">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1105">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1106">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1107">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1108">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1109">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1110">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1111">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-41" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-41"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1200">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1201">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1202">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1203">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1204">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1205">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1206">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1207">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1208">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1209">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1210">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:1211">
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="-50" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-87" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="-50"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:40">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.82" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.82"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.82" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.82"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:70">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="1.12" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="1.12"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="1.12" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="1.12"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:72">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.9" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.9"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.9" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.9"/>
+                </KeyedProperty>
+                <KeyedProperty property="opacity">
+                    <KeyFrameDouble frame="0" value="0.5" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="0.75" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="600" value="0.5"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+    </Artboard>
+    <ComponentAsset artboardId="0:30" name="Breath"/>
+
+    <!-- Glides the petals, petal rings and exhale mix to a new choice instead of snapping. -->
+    <!-- One per input: an interpolator keeps its own running value, so binds reading different properties must not share one. -->
+    <DataConverterInterpolator interpolationType="cubic" duration="0.4" name="Smooth Pace" id="0:520"/>
+    <DataConverterInterpolator interpolationType="cubic" duration="0.4" name="Smooth Duration" id="0:521"/>
+
+    <!-- Playback speed: the timelines are one breath at 6 a minute. -->
+    <DataConverterFormula name="Pace Speed" id="0:530">
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenValue operationValue="6"/>
+    </DataConverterFormula>
+    <!-- How much of the long exhale mixes in: 1 at 4 breaths a minute, 0 at 12. -->
+    <DataConverterFormula name="Exhale Mix" id="0:533">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenParenthesisOpen/>
+        <FormulaTokenValue operationValue="12"/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenInput/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenValue operationValue="8"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Exhale Mix" id="0:534">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:533"/>
+    </DataConverterGroup>
+
+    <!-- Petal k sits at k * 2π / breathsPerMinute and shows while k < breathsPerMinute. -->
+    <DataConverterFormula name="Petal 2 Angle" id="0:541">
+        <FormulaTokenValue operationValue="6.2831853"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 2 Angle" id="0:561">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:541"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 3 Angle" id="0:542">
+        <FormulaTokenValue operationValue="12.5663706"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 3 Angle" id="0:562">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:542"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 4 Angle" id="0:543">
+        <FormulaTokenValue operationValue="18.8495559"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 4 Angle" id="0:563">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:543"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 5 Angle" id="0:544">
+        <FormulaTokenValue operationValue="25.1327412"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 5 Angle" id="0:564">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:544"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 6 Angle" id="0:545">
+        <FormulaTokenValue operationValue="31.4159265"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 6 Angle" id="0:565">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:545"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 7 Angle" id="0:546">
+        <FormulaTokenValue operationValue="37.6991118"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 7 Angle" id="0:566">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:546"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 8 Angle" id="0:547">
+        <FormulaTokenValue operationValue="43.9822972"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 8 Angle" id="0:567">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:547"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 9 Angle" id="0:548">
+        <FormulaTokenValue operationValue="50.2654825"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 9 Angle" id="0:568">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:548"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 10 Angle" id="0:549">
+        <FormulaTokenValue operationValue="56.5486678"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 10 Angle" id="0:569">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:549"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 11 Angle" id="0:550">
+        <FormulaTokenValue operationValue="62.8318531"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 11 Angle" id="0:570">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:550"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 12 Angle" id="0:551">
+        <FormulaTokenValue operationValue="69.1150384"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 12 Angle" id="0:571">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:551"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 5 Visibility" id="0:584">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="4"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 5 Visibility" id="0:604">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:584"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 6 Visibility" id="0:585">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="5"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 6 Visibility" id="0:605">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:585"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 7 Visibility" id="0:586">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="6"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 7 Visibility" id="0:606">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:586"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 8 Visibility" id="0:587">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="7"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 8 Visibility" id="0:607">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:587"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 9 Visibility" id="0:588">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="8"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 9 Visibility" id="0:608">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:588"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 10 Visibility" id="0:589">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="9"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 10 Visibility" id="0:609">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:589"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 11 Visibility" id="0:590">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="10"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 11 Visibility" id="0:610">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:590"/>
+    </DataConverterGroup>
+    <DataConverterFormula name="Petal 12 Visibility" id="0:591">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="11"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Petal 12 Visibility" id="0:611">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:591"/>
+    </DataConverterGroup>
+
+    <!-- Petal layers by session length: middle from 3 minutes, outer at 5. -->
+    <DataConverterFormula name="Middle Layer Visibility" id="0:651">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="2"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterFormula name="Outer Layer Visibility" id="0:652">
+        <FormulaTokenFunction functionType="0"/>
+        <FormulaTokenValue operationValue="1"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenFunction functionType="1"/>
+        <FormulaTokenValue operationValue="0"/>
+        <FormulaTokenArgumentSeparator/>
+        <FormulaTokenInput/>
+        <FormulaTokenOperation operationType="1"/>
+        <FormulaTokenValue operationValue="4"/>
+        <FormulaTokenParenthesisClose/>
+        <FormulaTokenParenthesisClose/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Middle Layer Visibility" id="0:641">
+        <DataConverterGroupItem converterId="0:521"/>
+        <DataConverterGroupItem converterId="0:651"/>
+    </DataConverterGroup>
+    <DataConverterGroup name="Smooth Outer Layer Visibility" id="0:642">
+        <DataConverterGroupItem converterId="0:521"/>
+        <DataConverterGroupItem converterId="0:652"/>
+    </DataConverterGroup>
+    <!-- The middle layer sits half a petal spacing round: π / breathsPerMinute. -->
+    <DataConverterFormula name="Half Petal Spacing" id="0:653">
+        <FormulaTokenValue operationValue="3.1415927"/>
+        <FormulaTokenOperation operationType="3"/>
+        <FormulaTokenInput/>
+    </DataConverterFormula>
+    <DataConverterGroup name="Smooth Half Petal Spacing" id="0:643">
+        <DataConverterGroupItem converterId="0:520"/>
+        <DataConverterGroupItem converterId="0:653"/>
+    </DataConverterGroup>
+
+    <ViewModel defaultInstanceId="0:101" name="Pacer" id="0:100">
+        <ViewModelPropertyNumber name="breathsPerMinute" id="0:110"/>
+        <ViewModelPropertyNumber name="durationMinutes" id="0:111"/>
+        <ViewModelPropertyColor name="petalColor" id="0:112"/>
+        <ViewModelPropertyColor name="haloColor" id="0:113"/>
+        <ViewModelPropertyColor name="coreColor" id="0:114"/>
+
+        <!-- Defaults match the app's initial choice and light palette; the app overrides them. -->
+        <ViewModelInstance exports="true" name="Default" id="0:101">
+            <ViewModelInstanceNumber propertyValue="6" viewModelPropertyId="0:110"/>
+            <ViewModelInstanceNumber propertyValue="3" viewModelPropertyId="0:111"/>
+            <ViewModelInstanceColor propertyValue="FF2F5D50" viewModelPropertyId="0:112"/>
+            <ViewModelInstanceColor propertyValue="FFD5E3DB" viewModelPropertyId="0:113"/>
+            <ViewModelInstanceColor propertyValue="FFFFFCF6" viewModelPropertyId="0:114"/>
+        </ViewModelInstance>
+    </ViewModel>
+</Rive>

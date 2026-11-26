@@ -1,29 +1,70 @@
 import 'package:material_ui/material_ui.dart';
-import 'package:novian_recruitement_task/i18n/i18n.dart';
+import 'package:novian_recruitement_task/assets/app_assets.dart';
+import 'package:novian_recruitement_task/features/session/domain/session_choices.dart';
+import 'package:novian_recruitement_task/features/session/widgets/session_pacer_view_model.dart';
 import 'package:novian_recruitement_task/theme/app_colors.dart';
-import 'package:novian_recruitement_task/theme/app_spacing.dart';
-import 'package:novian_recruitement_task/theme/app_typography.dart';
+import 'package:rive/rive.dart';
 
-/// Slot for the session Rive animation. It receives the chosen pace and
-/// length as plain values, so the animation can react to them without owning
-/// any app state. Until it lands, a muted circle reserves the space.
-class BreathingAnimation extends StatelessWidget {
+/// The session's breathing guide. It receives the choices as a plain value
+/// and writes them into the Rive view model, so the animation follows the
+/// pickers without owning any app state.
+class BreathingAnimation extends StatefulWidget {
   const new({
-    required this.breathsPerMinute,
-    required this.durationMinutes,
+    required this.choices,
     super.key,
   });
 
-  final int breathsPerMinute;
-  final int durationMinutes;
+  final SessionChoices choices;
 
-  static const _maxSize = 240.0;
+  @override
+  State<BreathingAnimation> createState() => _BreathingAnimationState();
+}
+
+class _BreathingAnimationState extends State<BreathingAnimation> {
+  static const _maxSize = 340.0;
+
+  late final _fileLoader = FileLoader.fromAsset(
+    AppAssets.sessionPacer,
+    riveFactory: Factory.rive,
+  );
+
+  SessionPacerViewModel? _pacer;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Re-runs when the theme switches between light and dark.
+    _applyPalette();
+  }
+
+  @override
+  void didUpdateWidget(BreathingAnimation oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.choices != widget.choices) {
+      _applyChoices();
+    }
+  }
+
+  @override
+  void dispose() {
+    _fileLoader.dispose();
+    super.dispose();
+  }
+
+  void _onLoaded(RiveLoaded state) {
+    if (state.viewModelInstance case final viewModelInstance?) {
+      _pacer = SessionPacerViewModel(viewModelInstance);
+      _applyPalette();
+      _applyChoices();
+    }
+  }
+
+  void _applyChoices() => _pacer?.setChoices(widget.choices);
+
+  void _applyPalette() => _pacer?.setPalette(context.appColors);
 
   @override
   Widget build(BuildContext context) {
-    final t = context.t;
-    final colors = context.appColors;
-
     return ConstrainedBox(
       constraints: const BoxConstraints(
         maxWidth: _maxSize,
@@ -31,25 +72,16 @@ class BreathingAnimation extends StatelessWidget {
       ),
       child: AspectRatio(
         aspectRatio: 1,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: colors.primaryMuted,
-            shape: BoxShape.circle,
-            border: Border.all(color: colors.primary),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.animation, color: colors.primary),
-              SizedBox(height: context.appSpacing.xs),
-              Text(
-                t.session.breathingAnimationPlaceholder,
-                style: context.appTypography.label.copyWith(
-                  color: colors.primary,
-                ),
-              ),
-            ],
-          ),
+        child: RiveWidgetBuilder(
+          fileLoader: _fileLoader,
+          dataBind: DataBind.auto(),
+          onLoaded: _onLoaded,
+          builder: (context, state) => switch (state) {
+            RiveLoaded(:final controller) => RiveWidget(
+              controller: controller,
+            ),
+            RiveLoading() || RiveFailed() => const SizedBox.expand(),
+          },
         ),
       ),
     );

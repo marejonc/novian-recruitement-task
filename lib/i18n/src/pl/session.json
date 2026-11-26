@@ -9,6 +9,5 @@
   },
   "durationLabel": "Czas trwania",
   "durationOption": "$minutes min",
-  "continueToSummary": "Dalej",
-  "breathingAnimationPlaceholder": "Animacja Rive"
+  "continueToSummary": "Dalej"
 }

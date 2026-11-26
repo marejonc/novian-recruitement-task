@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:novian_recruitement_task/features/session/domain/breathing_pace.dart';
 import 'package:novian_recruitement_task/features/session/domain/session_choices.dart';
-import 'package:novian_recruitement_task/features/summary/widgets/extensions/breathing_pace_extension.dart';
+import 'package:novian_recruitement_task/features/session/widgets/extensions/breathing_pace_extension.dart';
 import 'package:novian_recruitement_task/i18n/i18n.dart';
 import 'package:novian_recruitement_task/theme/app_colors.dart';
 import 'package:novian_recruitement_task/theme/app_radius.dart';

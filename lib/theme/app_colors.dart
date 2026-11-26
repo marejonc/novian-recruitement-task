@@ -23,6 +23,7 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
     required this.outline,
     required this.error,
     required this.onError,
+    required this.bloomCenter,
   });
 
   /// Warm paper background with a deep sage primary and a dusk-lavender
@@ -43,6 +44,7 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
     outline: Color(0xFFD8D0C2),
     error: Color(0xFFB4443A),
     onError: Color(0xFFFFFCF6),
+    bloomCenter: Color(0xFFFFFCF6),
   );
 
   /// Deep night-blue background; the sage and lavender are lifted so they
@@ -63,6 +65,7 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
     outline: Color(0xFF2F3A46),
     error: Color(0xFFF0958A),
     onError: Color(0xFF2A0F0C),
+    bloomCenter: Color(0xFFF1EDE4),
   );
 
   @override
@@ -98,4 +101,8 @@ class AppColors extends ThemeExtension<AppColors> with _$AppColorsTailorMixin {
   final Color error;
   @override
   final Color onError;
+
+  /// The cream centre of the logo flower, in both themes.
+  @override
+  final Color bloomCenter;
 }

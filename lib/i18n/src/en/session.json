@@ -7,6 +7,5 @@
   },
   "durationLabel": "Duration",
   "durationOption": "$minutes min",
-  "continueToSummary": "Continue",
-  "breathingAnimationPlaceholder": "Rive animation"
+  "continueToSummary": "Continue"
 }

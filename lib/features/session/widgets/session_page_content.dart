@@ -43,10 +43,7 @@ class SessionPageContent extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Center(
-                            child: BreathingAnimation(
-                              breathsPerMinute: choices.breathsPerMinute,
-                              durationMinutes: choices.duration.minutes,
-                            ),
+                            child: BreathingAnimation(choices: choices),
                           ),
                         ),
                         SizedBox(height: spacing.xl),
