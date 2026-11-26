@@ -29,11 +29,6 @@ class OnboardingLanguageStep extends StatelessWidget {
         ),
         SizedBox(height: spacing.xs),
         Text(t.onboarding.languageTitle, style: typography.display),
-        SizedBox(height: spacing.m),
-        Text(
-          t.onboarding.languageBody,
-          style: typography.body.copyWith(color: colors.textSecondary),
-        ),
         SizedBox(height: spacing.xl),
         const LanguageSwitch(),
         const Spacer(),
