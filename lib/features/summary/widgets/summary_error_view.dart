@@ -27,7 +27,7 @@ class SummaryErrorView extends StatelessWidget {
             ),
             SizedBox(height: spacing.l),
             OutlinedButton(
-              onPressed: () => context.read<SummaryCubit>().load(),
+              onPressed: () => context.read<SummaryCubit>().retry(),
               child: Text(t.summary.retry),
             ),
           ],

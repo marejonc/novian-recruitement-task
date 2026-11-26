@@ -11,6 +11,7 @@ class UserRepositoryImpl implements UserRepository {
   final MockUserApi _api;
 
   @override
-  Future<User> fetchUser() =>
-      _api.getUser().then((json) => UserDto.fromJson(json).toDomain());
+  Future<List<User>> fetchUsers() => _api.getUsers().then(
+    (json) => [for (final user in json) UserDto.fromJson(user).toDomain()],
+  );
 }

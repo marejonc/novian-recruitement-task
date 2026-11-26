@@ -7,5 +7,9 @@
   },
   "durationLabel": "Duration",
   "durationOption": "$minutes min",
-  "continueToSummary": "Continue"
+  "continueToSummary": "Continue",
+  "userLabel": "User",
+  "usersLoading": "Loading users…",
+  "usersLoadError": "Could not load users.",
+  "userName": "$firstName $lastName"
 }

@@ -9,5 +9,9 @@
   },
   "durationLabel": "Czas trwania",
   "durationOption": "$minutes min",
-  "continueToSummary": "Dalej"
+  "continueToSummary": "Dalej",
+  "userLabel": "Użytkownik",
+  "usersLoading": "Wczytywanie użytkowników…",
+  "usersLoadError": "Błąd wczytywania.",
+  "userName": "$firstName $lastName"
 }

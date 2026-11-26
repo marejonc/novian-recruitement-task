@@ -6,6 +6,7 @@ import 'package:novian_recruitement_task/features/session/widgets/breathing_anim
 import 'package:novian_recruitement_task/features/session/widgets/breaths_per_minute_picker.dart';
 import 'package:novian_recruitement_task/features/session/widgets/session_continue_button.dart';
 import 'package:novian_recruitement_task/features/session/widgets/session_duration_picker.dart';
+import 'package:novian_recruitement_task/features/session/widgets/session_user_picker.dart';
 import 'package:novian_recruitement_task/i18n/i18n.dart';
 import 'package:novian_recruitement_task/theme/app_spacing.dart';
 
@@ -18,8 +19,8 @@ class SessionPageContent extends StatelessWidget {
     final spacing = context.appSpacing;
     final choices = context.watch<SessionChoicesCubit>().state;
 
-    // The animation takes whatever height is left; on short screens
-    // (landscape phones) the whole column scrolls instead of overflowing.
+    // The animation takes whatever height is left, so the page fits the
+    // screen without scrolling.
     return Scaffold(
       appBar: AppBar(
         title: Text(t.session.title),
@@ -29,36 +30,33 @@ class SessionPageContent extends StatelessWidget {
         child: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: spacing.maxContentWidth),
-            child: CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: spacing.l,
-                      vertical: spacing.l,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: BreathingAnimation(choices: choices),
-                          ),
-                        ),
-                        SizedBox(height: spacing.xl),
-                        BreathsPerMinutePicker(
-                          breathsPerMinute: choices.breathsPerMinute,
-                        ),
-                        SizedBox(height: spacing.l),
-                        SessionDurationPicker(duration: choices.duration),
-                        SizedBox(height: spacing.xl),
-                        const SessionContinueButton(),
-                      ],
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                spacing.l,
+                spacing.xs,
+                spacing.l,
+                spacing.l,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SessionUserPicker(),
+                  SizedBox(height: spacing.m),
+                  Expanded(
+                    child: Center(
+                      child: BreathingAnimation(choices: choices),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: spacing.l),
+                  BreathsPerMinutePicker(
+                    breathsPerMinute: choices.breathsPerMinute,
+                  ),
+                  SizedBox(height: spacing.l),
+                  SessionDurationPicker(duration: choices.duration),
+                  SizedBox(height: spacing.xl),
+                  const SessionContinueButton(),
+                ],
+              ),
             ),
           ),
         ),
