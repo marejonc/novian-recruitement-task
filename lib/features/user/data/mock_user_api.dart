@@ -13,7 +13,7 @@ class MockUserApi {
 
   final Random _random;
 
-  static const _latency = Duration(milliseconds: 1200);
+  static const _latency = Duration(milliseconds: 500);
   static const _failureRate = 0.1;
   static const _responseBody = '''
 [
