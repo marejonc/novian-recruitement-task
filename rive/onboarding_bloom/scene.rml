@@ -1,0 +1,468 @@
+<Rive version="1" kind="fragment">
+    <!--
+        Breathing Bloom: the onboarding hero.
+
+        Three rings of petals and a core open and close on an 8-second breath
+        (4 s in, 4 s out). Everything that reacts to the user goes through the
+        "Bloom" view model:
+
+        - tiltX / tiltY (-1..1): device tilt, set by the app. Each layer is
+          shifted by a different amount, so the bloom has parallax depth.
+        - isTouched: written by the pointer listeners. While a finger is down
+          the rings lean towards it; on release they ease back to the centre.
+        - *Color: the palette, set by the app from its theme tokens so the
+          bloom follows light and dark mode.
+    -->
+    <Artboard defaultStateMachineId="0:300" viewModelId="0:100" viewModelInstanceId="0:101" styleId="0:3" width="400" height="400" name="Bloom" id="0:2">
+        <LayoutComponentStyle name="Artboard Style" id="0:3"/>
+
+        <!-- Transparent full-artboard target: pointer input is not offered on the artboard itself. -->
+        <Shape name="Hit Area" id="0:10">
+            <Rectangle width="400" height="400" originX="0" originY="0" name="Path"/>
+            <Fill name="Fill">
+                <SolidColor colorValue="00FFFFFF" name="Color"/>
+            </Fill>
+        </Shape>
+
+        <!-- Follows the finger while it is down; the rings lean towards it through constraints. -->
+        <Node x="200" y="200" name="Pointer" id="0:11"/>
+
+        <!-- Scaled by the tap pop; holds every ring so the pop moves them together. -->
+        <Node x="200" y="200" name="Bloom" id="0:20">
+
+            <Shape opacity="0.55" name="Core" id="0:60">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="13" converterId="0:504"/>
+                <DataBindContext sourcePathIds="0:100-0:111" propertyKey="14" converterId="0:504"/>
+                <TranslationConstraint targetId="0:11" strength="0.22" name="Lean"/>
+                <Ellipse width="34" height="34" name="Path"/>
+                <Fill name="Fill">
+                    <SolidColor name="Color">
+                        <DataBindContext sourcePathIds="0:100-0:117" propertyKey="37"/>
+                    </SolidColor>
+                </Fill>
+            </Shape>
+
+            <Node opacity="0.38" name="Inner Ring" id="0:50">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="13" converterId="0:503"/>
+                <DataBindContext sourcePathIds="0:100-0:111" propertyKey="14" converterId="0:503"/>
+                <TranslationConstraint targetId="0:11" strength="0.16" name="Lean"/>
+                <Shape rotation="0" name="Inner Petal 1">
+                    <Ellipse width="40" height="82" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:116" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="1.0471976" name="Inner Petal 2">
+                    <Ellipse width="40" height="82" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:116" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="2.0943951" name="Inner Petal 3">
+                    <Ellipse width="40" height="82" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:116" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="3.1415927" name="Inner Petal 4">
+                    <Ellipse width="40" height="82" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:116" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="4.1887902" name="Inner Petal 5">
+                    <Ellipse width="40" height="82" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:116" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="5.2359878" name="Inner Petal 6">
+                    <Ellipse width="40" height="82" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:116" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+
+            <Node opacity="0.26" name="Middle Ring" id="0:40">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="13" converterId="0:502"/>
+                <DataBindContext sourcePathIds="0:100-0:111" propertyKey="14" converterId="0:502"/>
+                <TranslationConstraint targetId="0:11" strength="0.1" name="Lean"/>
+                <Shape rotation="0.3926991" name="Middle Petal 1">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="1.1780972" name="Middle Petal 2">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="1.9634954" name="Middle Petal 3">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="2.7488936" name="Middle Petal 4">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="3.5342917" name="Middle Petal 5">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="4.3196899" name="Middle Petal 6">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="5.1050881" name="Middle Petal 7">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="5.8904862" name="Middle Petal 8">
+                    <Ellipse width="58" height="120" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+
+            <Node opacity="0.16" name="Outer Ring" id="0:30">
+                <DataBindContext sourcePathIds="0:100-0:110" propertyKey="13" converterId="0:501"/>
+                <DataBindContext sourcePathIds="0:100-0:111" propertyKey="14" converterId="0:501"/>
+                <TranslationConstraint targetId="0:11" strength="0.06" name="Lean"/>
+                <Shape rotation="0" name="Outer Petal 1">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="0.7853982" name="Outer Petal 2">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="1.5707964" name="Outer Petal 3">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="2.3561945" name="Outer Petal 4">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="3.1415927" name="Outer Petal 5">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="3.9269908" name="Outer Petal 6">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="4.712389" name="Outer Petal 7">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+                <Shape rotation="5.497787" name="Outer Petal 8">
+                    <Ellipse width="72" height="150" originY="1" name="Path"/>
+                    <Fill name="Fill"><SolidColor name="Color"><DataBindContext sourcePathIds="0:100-0:114" propertyKey="37"/></SolidColor></Fill>
+                </Shape>
+            </Node>
+        </Node>
+
+        <!-- Expanding ring sent out by each press. -->
+        <Shape x="200" y="200" opacity="0" name="Ripple" id="0:21">
+            <Ellipse width="170" height="170" name="Path"/>
+            <Stroke thickness="1.5" name="Stroke">
+                <SolidColor name="Color">
+                    <DataBindContext sourcePathIds="0:100-0:115" propertyKey="37"/>
+                </SolidColor>
+            </Stroke>
+        </Shape>
+
+        <!-- Soft backdrop, the deepest parallax layer. -->
+        <Shape x="200" y="200" name="Halo" id="0:22">
+            <DataBindContext sourcePathIds="0:100-0:110" propertyKey="13" converterId="0:500"/>
+            <DataBindContext sourcePathIds="0:100-0:111" propertyKey="14" converterId="0:500"/>
+            <TranslationConstraint targetId="0:11" strength="0.03" name="Lean"/>
+            <Ellipse width="330" height="330" name="Path"/>
+            <Fill name="Fill">
+                <SolidColor name="Color">
+                    <DataBindContext sourcePathIds="0:100-0:113" propertyKey="37"/>
+                </SolidColor>
+            </Fill>
+        </Shape>
+
+        <!-- 8 s breath: 4 s in (open), 4 s out (close). -->
+        <LinearAnimation loopValue="loop" duration="480" name="Breathe" id="0:200">
+            <KeyedObject objectId="0:22">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.86" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1.04" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.86"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.86" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1.04" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.86"/>
+                </KeyedProperty>
+                <KeyedProperty property="opacity">
+                    <KeyFrameDouble frame="0" value="0.35" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="0.7" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.35"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:30">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.8" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.8"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.8" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.8"/>
+                </KeyedProperty>
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="0.12" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:40">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.74"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.74" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.74"/>
+                </KeyedProperty>
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="-0.18" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:50">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.66" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1.04" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.66"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.66" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1.04" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.66"/>
+                </KeyedProperty>
+                <KeyedProperty property="rotation">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="0.26" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:60">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.88" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1.18" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.88"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.88" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="240" value="1.18" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="480" value="0.88"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <!-- Holds the pointer at the centre; mixed in on release so the rings ease back. -->
+        <LinearAnimation loopValue="loop" duration="60" name="Pointer Rest" id="0:201">
+            <KeyedObject objectId="0:11">
+                <KeyedProperty property="x">
+                    <KeyFrameDouble frame="0" value="200" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="200"/>
+                </KeyedProperty>
+                <KeyedProperty property="y">
+                    <KeyFrameDouble frame="0" value="200" interpolationType="linear"/>
+                    <KeyFrameDouble frame="60" value="200"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <!-- Keys nothing: while it plays, the pointer listeners own the pointer node. -->
+        <LinearAnimation loopValue="loop" duration="60" name="Pointer Follow" id="0:202"/>
+
+        <!-- Press: the ripple expands and fades, the bloom pops slightly. -->
+        <LinearAnimation duration="72" name="Ripple" id="0:203">
+            <KeyedObject objectId="0:21">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="0.6" interpolationType="cubic"><CubicEaseInterpolator x1="0" y1="0" x2="0.2" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble frame="72" value="2.1"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="0.6" interpolationType="cubic"><CubicEaseInterpolator x1="0" y1="0" x2="0.2" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble frame="72" value="2.1"/>
+                </KeyedProperty>
+                <KeyedProperty property="opacity">
+                    <KeyFrameDouble frame="0" value="0.45" interpolationType="cubic"><CubicEaseInterpolator x1="0.4" y1="0" x2="1" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble frame="72" value="0"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:20">
+                <KeyedProperty property="scaleX">
+                    <KeyFrameDouble frame="0" value="1" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.2" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble frame="14" value="1.07" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="60" value="1"/>
+                </KeyedProperty>
+                <KeyedProperty property="scaleY">
+                    <KeyFrameDouble frame="0" value="1" interpolationType="cubic"><CubicEaseInterpolator x1="0.3" y1="0" x2="0.2" y2="1"/></KeyFrameDouble>
+                    <KeyFrameDouble frame="14" value="1.07" interpolationType="cubic"><CubicEaseInterpolator/></KeyFrameDouble>
+                    <KeyFrameDouble frame="60" value="1"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <!-- Keys nothing: the resting state of the ripple layer. -->
+        <LinearAnimation loopValue="loop" duration="60" name="Ripple Idle" id="0:204"/>
+
+        <StateMachine name="Bloom" id="0:300">
+            <!-- Finger down: snap the pointer node to it and mark the bloom as touched. -->
+            <StateMachineListenerSingle targetId="0:10" listenerTypeValue="down" name="Press">
+                <ListenerAlignTarget targetId="0:11"/>
+                <ListenerViewModelChange>
+                    <BindablePropertyBoolean propertyValue="true">
+                        <DataBindContext sourcePathIds="0:100-0:112" propertyKey="634" direction="true"/>
+                    </BindablePropertyBoolean>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle targetId="0:10" listenerTypeValue="move" name="Follow">
+                <ListenerAlignTarget targetId="0:11"/>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle targetId="0:10" listenerTypeValue="up" name="Release">
+                <ListenerViewModelChange>
+                    <BindablePropertyBoolean propertyValue="false">
+                        <DataBindContext sourcePathIds="0:100-0:112" propertyKey="634" direction="true"/>
+                    </BindablePropertyBoolean>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+            <StateMachineListenerSingle targetId="0:10" listenerTypeValue="exit" name="Leave">
+                <ListenerViewModelChange>
+                    <BindablePropertyBoolean propertyValue="false">
+                        <DataBindContext sourcePathIds="0:100-0:112" propertyKey="634" direction="true"/>
+                    </BindablePropertyBoolean>
+                </ListenerViewModelChange>
+            </StateMachineListenerSingle>
+
+            <StateMachineLayer name="Breath" id="0:310">
+                <AnyState x="0" y="-150"/>
+                <ExitState x="300" y="-150"/>
+                <EntryState x="0" y="0">
+                    <StateTransition stateToId="0:311"/>
+                </EntryState>
+                <AnimationState x="200" y="0" animationId="0:200" id="0:311"/>
+            </StateMachineLayer>
+
+            <StateMachineLayer name="Pointer" id="0:320">
+                <AnyState x="0" y="-150"/>
+                <ExitState x="300" y="-150"/>
+                <EntryState x="0" y="0">
+                    <StateTransition stateToId="0:321"/>
+                </EntryState>
+                <AnimationState x="200" y="0" animationId="0:201" id="0:321">
+                    <StateTransition stateToId="0:322" enableEarlyExit="true">
+                        <TransitionViewModelCondition opValue="equal">
+                            <TransitionPropertyViewModelComparator>
+                                <BindablePropertyBoolean>
+                                    <DataBindContext sourcePathIds="0:100-0:112" propertyKey="634"/>
+                                </BindablePropertyBoolean>
+                            </TransitionPropertyViewModelComparator>
+                            <TransitionValueBooleanComparator value="true"/>
+                        </TransitionViewModelCondition>
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState x="400" y="0" animationId="0:202" id="0:322">
+                    <StateTransition stateToId="0:321" duration="900" interpolationType="cubic" enableEarlyExit="true">
+                        <CubicEaseInterpolator x1="0.2" y1="0" x2="0.1" y2="1"/>
+                        <TransitionViewModelCondition opValue="equal">
+                            <TransitionPropertyViewModelComparator>
+                                <BindablePropertyBoolean>
+                                    <DataBindContext sourcePathIds="0:100-0:112" propertyKey="634"/>
+                                </BindablePropertyBoolean>
+                            </TransitionPropertyViewModelComparator>
+                            <TransitionValueBooleanComparator value="false"/>
+                        </TransitionViewModelCondition>
+                    </StateTransition>
+                </AnimationState>
+            </StateMachineLayer>
+
+            <StateMachineLayer name="Ripple" id="0:330">
+                <AnyState x="0" y="-150"/>
+                <ExitState x="300" y="-150"/>
+                <EntryState x="0" y="0">
+                    <StateTransition stateToId="0:331"/>
+                </EntryState>
+                <AnimationState x="200" y="0" animationId="0:204" id="0:331">
+                    <StateTransition stateToId="0:332">
+                        <TransitionViewModelCondition opValue="equal">
+                            <TransitionPropertyViewModelComparator>
+                                <BindablePropertyBoolean>
+                                    <DataBindContext sourcePathIds="0:100-0:112" propertyKey="634"/>
+                                </BindablePropertyBoolean>
+                            </TransitionPropertyViewModelComparator>
+                            <TransitionValueBooleanComparator value="true"/>
+                        </TransitionViewModelCondition>
+                    </StateTransition>
+                </AnimationState>
+                <!-- One ripple per press: wait for the ripple to finish and the finger to lift. -->
+                <AnimationState x="400" y="0" animationId="0:203" id="0:332">
+                    <StateTransition stateToId="0:331" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100">
+                        <TransitionViewModelCondition opValue="equal">
+                            <TransitionPropertyViewModelComparator>
+                                <BindablePropertyBoolean>
+                                    <DataBindContext sourcePathIds="0:100-0:112" propertyKey="634"/>
+                                </BindablePropertyBoolean>
+                            </TransitionPropertyViewModelComparator>
+                            <TransitionValueBooleanComparator value="false"/>
+                        </TransitionViewModelCondition>
+                    </StateTransition>
+                </AnimationState>
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+
+    <!-- Tilt (-1..1) to a layer offset around its rest position; deeper layers move less. -->
+    <DataConverterGroup name="Halo Depth" id="0:500">
+        <DataConverterGroupItem converterId="0:510"/>
+        <DataConverterGroupItem converterId="0:520"/>
+    </DataConverterGroup>
+    <DataConverterGroup name="Outer Depth" id="0:501">
+        <DataConverterGroupItem converterId="0:511"/>
+        <DataConverterGroupItem converterId="0:520"/>
+    </DataConverterGroup>
+    <DataConverterGroup name="Middle Depth" id="0:502">
+        <DataConverterGroupItem converterId="0:512"/>
+        <DataConverterGroupItem converterId="0:520"/>
+    </DataConverterGroup>
+    <DataConverterGroup name="Inner Depth" id="0:503">
+        <DataConverterGroupItem converterId="0:513"/>
+        <DataConverterGroupItem converterId="0:520"/>
+    </DataConverterGroup>
+    <DataConverterGroup name="Core Depth" id="0:504">
+        <DataConverterGroupItem converterId="0:514"/>
+        <DataConverterGroupItem converterId="0:520"/>
+    </DataConverterGroup>
+
+    <!-- The halo sits on the artboard, around (200, 200); the rings sit inside the Bloom node, around (0, 0). -->
+    <DataConverterRangeMapper minInput="-1" maxInput="1" minOutput="192" maxOutput="208" clampLower="true" clampUpper="true" name="Halo Offset" id="0:510"/>
+    <DataConverterRangeMapper minInput="-1" maxInput="1" minOutput="-12" maxOutput="12" clampLower="true" clampUpper="true" name="Outer Offset" id="0:511"/>
+    <DataConverterRangeMapper minInput="-1" maxInput="1" minOutput="-20" maxOutput="20" clampLower="true" clampUpper="true" name="Middle Offset" id="0:512"/>
+    <DataConverterRangeMapper minInput="-1" maxInput="1" minOutput="-28" maxOutput="28" clampLower="true" clampUpper="true" name="Inner Offset" id="0:513"/>
+    <DataConverterRangeMapper minInput="-1" maxInput="1" minOutput="-36" maxOutput="36" clampLower="true" clampUpper="true" name="Core Offset" id="0:514"/>
+
+    <!-- Smooths the sensor steps so tilt glides instead of jittering. -->
+    <DataConverterInterpolator interpolationType="linear" duration="0.18" name="Smooth" id="0:520"/>
+
+    <ViewModel defaultInstanceId="0:101" name="Bloom" id="0:100">
+        <ViewModelPropertyNumber name="tiltX" id="0:110"/>
+        <ViewModelPropertyNumber name="tiltY" id="0:111"/>
+        <ViewModelPropertyBoolean name="isTouched" id="0:112"/>
+        <ViewModelPropertyColor name="haloColor" id="0:113"/>
+        <ViewModelPropertyColor name="outerPetalColor" id="0:114"/>
+        <ViewModelPropertyColor name="middlePetalColor" id="0:115"/>
+        <ViewModelPropertyColor name="innerPetalColor" id="0:116"/>
+        <ViewModelPropertyColor name="coreColor" id="0:117"/>
+
+        <!-- Defaults match the app's light palette; the app overrides them from its theme. -->
+        <ViewModelInstance exports="true" name="Default" id="0:101">
+            <ViewModelInstanceNumber propertyValue="0" viewModelPropertyId="0:110"/>
+            <ViewModelInstanceNumber propertyValue="0" viewModelPropertyId="0:111"/>
+            <ViewModelInstanceBoolean propertyValue="false" viewModelPropertyId="0:112"/>
+            <ViewModelInstanceColor propertyValue="FFD5E3DB" viewModelPropertyId="0:113"/>
+            <ViewModelInstanceColor propertyValue="FF2F5D50" viewModelPropertyId="0:114"/>
+            <ViewModelInstanceColor propertyValue="FF2F5D50" viewModelPropertyId="0:115"/>
+            <ViewModelInstanceColor propertyValue="FF2F5D50" viewModelPropertyId="0:116"/>
+            <ViewModelInstanceColor propertyValue="FF2F5D50" viewModelPropertyId="0:117"/>
+        </ViewModelInstance>
+    </ViewModel>
+</Rive>

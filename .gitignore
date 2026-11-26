@@ -52,3 +52,6 @@ app.*.map.json
 *.gr.dart
 *.config.dart
 *.tailor.dart
+
+# Rive CLI build output (screenshots, local builds)
+rive/**/build/

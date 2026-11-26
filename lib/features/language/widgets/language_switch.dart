@@ -19,23 +19,20 @@ class LanguageSwitch extends StatelessWidget {
     final t = context.t;
     final locale = context.watch<LanguageCubit>().state;
 
-    return Semantics(
-      label: t.common.languageLabel,
-      child: SegmentedButton<AppLocale>(
-        segments: [
-          for (final option in AppLocale.values)
-            ButtonSegment(
-              value: option,
-              label: Text(isCompact ? option.codeIn(t) : option.nameIn(t)),
-              tooltip: isCompact ? option.nameIn(t) : null,
-            ),
-        ],
-        selected: {locale},
-        showSelectedIcon: false,
-        expandedInsets: isCompact ? null : EdgeInsets.zero,
-        onSelectionChanged: (selection) =>
-            context.read<LanguageCubit>().select(selection.first),
-      ),
+    return SegmentedButton<AppLocale>(
+      segments: [
+        for (final option in AppLocale.values)
+          ButtonSegment(
+            value: option,
+            label: Text(isCompact ? option.codeIn(t) : option.nameIn(t)),
+            tooltip: isCompact ? option.nameIn(t) : null,
+          ),
+      ],
+      selected: {locale},
+      showSelectedIcon: false,
+      expandedInsets: isCompact ? null : EdgeInsets.zero,
+      onSelectionChanged: (selection) =>
+          context.read<LanguageCubit>().select(selection.first),
     );
   }
 }

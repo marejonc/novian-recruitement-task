@@ -6,6 +6,8 @@
 		<true/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>NSMotionUsageDescription</key>
+		<string>Medcare uses motion data to make animations respond as you move your device.</string>
 		<key>CFBundleDisplayName</key>
 		<string>Medcare</string>
 		<key>CFBundleExecutable</key>

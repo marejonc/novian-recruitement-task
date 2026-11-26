@@ -19,6 +19,7 @@ dependencies:
   provider: ^6.1.5+1
   rive: ^0.14.11
   rxdart: ^0.28.0
+  sensors_plus: ^7.1.1
   shared_preferences: ^2.5.6
   single_value_cubit: ^1.2.3
   slang: ^4.19.2
@@ -40,6 +41,9 @@ dev_dependencies:
   very_good_analysis: ^11.0.0
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/rive/
 
   fonts:
     - family: Figtree

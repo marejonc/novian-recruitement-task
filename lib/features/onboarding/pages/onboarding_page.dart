@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:novian_recruitement_task/di/bloc_factory.dart';
+import 'package:novian_recruitement_task/features/motion/bloc/device_tilt_cubit.dart';
 import 'package:novian_recruitement_task/features/onboarding/bloc/complete_onboarding_cubit.dart';
 import 'package:novian_recruitement_task/features/onboarding/bloc/onboarding_step_cubit.dart';
 import 'package:novian_recruitement_task/features/onboarding/widgets/onboarding_page_content.dart';
@@ -20,6 +21,10 @@ class OnboardingPage extends StatelessWidget {
       providers: [
         SimpleBlocProvider<OnboardingStepCubit>(),
         SimpleBlocProvider<CompleteOnboardingCubit>(),
+        // Lazy: the sensor starts only when the hero animation first reads it.
+        BlocProvider<DeviceTiltCubit>(
+          create: (ctx) => ctx.blocFactory.get()..watch(),
+        ),
         BlocListener<CompleteOnboardingCubit, CompleteOnboardingState>(
           listener: (context, state) {
             if (state is CompleteOnboardingSuccess) {

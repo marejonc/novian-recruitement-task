@@ -44,8 +44,6 @@ class BreathsPerMinutePicker extends StatelessWidget {
           divisions:
               SessionChoices.maxBreathsPerMinute -
               SessionChoices.minBreathsPerMinute,
-          semanticFormatterCallback: (value) =>
-              t.session.paceSemantics(n: value.round()),
           onChanged: (value) => context
               .read<SessionChoicesCubit>()
               .setBreathsPerMinute(value.round()),
